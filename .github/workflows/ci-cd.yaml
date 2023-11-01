@@ -17,7 +17,7 @@ jobs:  #Karmasık projelerde bırden fazal ıs ola bilir
         with:
           dotnet-version: '7.x'
       
-      # - name: Restore dependecies
-      #  run: dotnet restore #gereklı nugetpacetlerı hepsını ındırır
+      - name: Restore dependecies
+        run: dotnet restore test-project/test-project/test-project.csproj #gereklı nugetpacetlerı hepsını ındırır
       - name: Build app
-        run: dotnet build #-c Release --no-restore  #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
+        run: dotnet build -c Release --no-restore test-project/test-project/test-project.csproj #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
