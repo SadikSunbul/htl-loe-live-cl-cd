@@ -18,6 +18,6 @@ jobs:  #Karmasık projelerde bırden fazal ıs ola bilir
           dotnet-version: '6.x'
           
       - name: Restore dependecies
-        run: ../dotnet restore #gereklı nugetpacetlerı hepsını ındırır
+        run: dotnet restore #gereklı nugetpacetlerı hepsını ındırır
       - name: Build app
         run: dotnet build -c Release --no-restore  #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
