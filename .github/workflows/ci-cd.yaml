@@ -18,7 +18,7 @@ jobs:  #Karmasık projelerde bırden fazal ıs ola bilir
           dotnet-version: '7.x'
       
       - name: konum bul
-        run: ../../../test-project
+        run: cd ../../../test-project
       
       - name: Restore dependecies
         run: dotnet restore #gereklı nugetpacetlerı hepsını ındırır
