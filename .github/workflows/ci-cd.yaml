@@ -1,22 +1,24 @@
 name: Continuous Integration and Deployment  #Herhangıbır ıseım ver
 
-on:  #bunun ne zaman olucagını belırtıcez
+on: #bunun ne zaman olucagını belırtıcez
   push:
     branches:
       - main #bırısı kodları ana dala yanı maıne ıttıgınde anlamına gelir
 
-jobs:  #Karmasık projelerde bırden fazal ıs ola bilir
+jobs: #Karmasık projelerde bırden fazal ıs ola bilir
   build:
     runs-on: ubuntu-latest #Derlemenın hangı platformda calısmasını ıstıyorsan gir
-    steps:  #Adımlara baslıyalım 
+    steps: #Adımlara baslıyalım 
       - name: Check out code  #bir isim verelim 
         uses: actions/checkout@v2 #kodu olusturmak ıcın kullanılan eylemi ekliyoruz
-        
+
       - name: Setup .NET #isim ver
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.x
-          
+
+      - name: Konum bulma
+        run: ../test-project
       - name: Restore dependecies
         run: dotnet restore #gereklı nugetpacetlerı hepsını ındırır
       - name: Build app
