@@ -16,7 +16,10 @@ jobs:  #Karmasık projelerde bırden fazal ıs ola bilir
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '7.x'
-          
+      
+      - name: konum bul
+        run: ../../../test-project
+      
       - name: Restore dependecies
         run: dotnet restore #gereklı nugetpacetlerı hepsını ındırır
       - name: Build app
