@@ -18,13 +18,13 @@ jobs: #Karmasık projelerde bırden fazal ıs ola bilir
           dotnet-version: '7.x'
 
       - name: Restore dependecies
-        run: dotnet restore #test-project/test-project/test-project.csproj #gereklı nugetpacetlerı hepsını ındırır
+        run: dotnet restore test-project/test-project/test-project.csproj #gereklı nugetpacetlerı hepsını ındırır
 
       - name: Build app
-        run: dotnet build -c Release --no-restore #test-project/test-project/test-project.csproj #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
+        run: dotnet build -c Release --no-restore test-project/test-project/test-project.csproj #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
 
       - name: Run outomated Tests  #unıt testlerımıını calıssacagı kısımdır 
-        run: dotnet test -c Release --no-build  #test-project/AnimalCountingDatabse.Tests/AnimalCountingDatabse.Tests.sln
+        run: dotnet test -c Release --no-build test-project/test-project/test-project.csproj #test-project/AnimalCountingDatabse.Tests/AnimalCountingDatabse.Tests.sln
         
         # test-project/AnimalCountingDatabse.Tests.csproj
         
