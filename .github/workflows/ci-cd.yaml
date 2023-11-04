@@ -5,6 +5,10 @@ on: #bunun ne zaman olucagını belırtıcez
     branches:
       - main #bırısı kodları ana dala yanı maıne ıttıgınde anlamına gelir
 
+env:   #ONEMLI SIFRELER VB KEYLERI BURAYA ASLA KOYMAYINIZ
+  DOTNET_VERSION: '7.x'
+  AZURE_WEBAPP_NAME: azure-deki-yayinin-adi
+
 jobs: #Karmasık projelerde bırden fazal ıs ola bilir
   build:
     runs-on: ubuntu-latest #Derlemenın hangı platformda calısmasını ıstıyorsan gir
@@ -15,7 +19,7 @@ jobs: #Karmasık projelerde bırden fazal ıs ola bilir
       - name: Setup .NET #isim ver
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '7.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependecies
         run: dotnet restore test-project/test-project.sln #test-project/test-project/test-project.csproj #gereklı nugetpacetlerı hepsını ındırır
@@ -25,9 +29,16 @@ jobs: #Karmasık projelerde bırden fazal ıs ola bilir
 
       - name: Run outomated Tests  #unıt testlerımıını calıssacagı kısımdır 
         run: dotnet test -c Release --no-build test-project/test-project.sln #test-project/AnimalCountingDatabse.Tests/AnimalCountingDatabse.Tests.sln
+       
+      - name: Publish app
+        run: dotnet publish -c Release -o ./out  #projeyı yayınla ve bır cıktı dızını ayarla
         
         # test-project/AnimalCountingDatabse.Tests.csproj
-        
-        
-        
-       
+      - name: Deploy to Azure Web Apps
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name:  ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }}
+          package: ./out
+          
+        # https://www.youtube.com/watch?v=ySVsLE0XWQA&list=PLhGL9p3BWHwtHPWX8g7yJFQvICdNhFQV7&index=22 BURANIN SON LARINI IZLE HATA ICIN
