@@ -21,6 +21,15 @@ jobs: #Karmasık projelerde bırden fazal ıs ola bilir
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Start SQL Server
+        run: |
+          docker run -d -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Passw0r8" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:latest 
+
+      - name: Sleep for 5 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '5s'  # 5 sanıye beklet
+          
       - name: Restore dependecies
         run: dotnet restore test-project/test-project.sln #test-project/test-project/test-project.csproj #gereklı nugetpacetlerı hepsını ındırır
 
@@ -28,17 +37,19 @@ jobs: #Karmasık projelerde bırden fazal ıs ola bilir
         run: dotnet build -c Release --no-restore test-project/test-project.sln #test-project/test-project/test-project.csproj #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
 
       - name: Run outomated Tests  #unıt testlerımıını calıssacagı kısımdır 
+        env:
+          ConnectionStrings__mssqlTest: Server=localhost, 1433;Database=TestGit-Actions_Test;User ID=SA;Password=Passw0r8;TrustServerCertificate=True
         run: dotnet test -c Release --no-build test-project/test-project.sln #test-project/AnimalCountingDatabse.Tests/AnimalCountingDatabse.Tests.sln
        
-      - name: Publish app
-        run: dotnet publish -c Release -o ./out  #projeyı yayınla ve bır cıktı dızını ayarla
+    #  - name: Publish app
+    #    run: dotnet publish -c Release -o ./out  #projeyı yayınla ve bır cıktı dızını ayarla
         
         # test-project/AnimalCountingDatabse.Tests.csproj
-      - name: Deploy to Azure Web Apps
-        uses: azure/webapps-deploy@v2
-        with: 
-          app-name:  ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }}
-          package: ./out
+    #  - name: Deploy to Azure Web Apps
+    #    uses: azure/webapps-deploy@v2
+    #    with: 
+    #      app-name:  ${{ env.AZURE_WEBAPP_NAME }}
+    #      publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }}
+    #      package: ./out
           
         # https://www.youtube.com/watch?v=ySVsLE0XWQA&list=PLhGL9p3BWHwtHPWX8g7yJFQvICdNhFQV7&index=22 BURANIN SON LARINI IZLE HATA ICIN
