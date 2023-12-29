@@ -21,7 +21,11 @@ namespace test_project.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<Data.Customer>> GetAll()
-            => await _context.Customers.ToArrayAsync();
+        {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+            return await _context.Customers.ToArrayAsync();
+        }
 
         [HttpPost]
         public async Task<Data.Customer> Add([FromBody] Data.Customer c)
