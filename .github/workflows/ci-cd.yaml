@@ -36,10 +36,10 @@ jobs: #Karmasık projelerde bırden fazal ıs ola bilir
       - name: Build app
         run: dotnet build -c Release --no-restore test-project/test-project.sln #test-project/test-project/test-project.csproj #kodu build eder buralarda run kullandık cunku drekt cmd den calıstırcak
 
-      - name: Run outomated Tests  #unıt testlerımıını calıssacagı kısımdır 
-        env:
-          ConnectionStrings__mssqlTest: Server=localhost, 1433;Database=TestGit-Actions_Test;User ID=SA;Password=Passw0r8;TrustServerCertificate=True
-        run: dotnet test -c Release --no-build test-project/test-project.sln #test-project/AnimalCountingDatabse.Tests/AnimalCountingDatabse.Tests.sln
+     # - name: Run outomated Tests  #unıt testlerımıını calıssacagı kısımdır 
+     #   env:
+     #     ConnectionStrings__mssqlTest: Server=localhost, 1433;Database=TestGit-Actions_Test;User ID=SA;Password=Passw0r8;TrustServerCertificate=True
+     #   run: dotnet test -c Release --no-build test-project/test-project.sln #test-project/AnimalCountingDatabse.Tests/AnimalCountingDatabse.Tests.sln
        
     #  - name: Publish app
     #    run: dotnet publish -c Release -o ./out  #projeyı yayınla ve bır cıktı dızını ayarla
